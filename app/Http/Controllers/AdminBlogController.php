@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 
 class AdminBlogController extends Controller
 {
+    const NUM_PER_PAGE = 5;
+
     /** @var Article */
     protected $article;
 
@@ -71,6 +73,17 @@ class AdminBlogController extends Controller
         $result = $this->article->destroy($article_id);
         $message = ($result) ? '記事を削除しました' : '記事の削除に失敗しました。';
 
-        return redirect()->route('admin_form')->with('message', $message);
+        return redirect()->route('admin_list')->with('message', $message);
+    }
+
+    /**
+     * ブログ記事一覧画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function list()
+    {
+        $list = $this->article->getArticleList(self::NUM_PER_PAGE);
+        return view('admin_blog.list', compact('list'));
     }
 }
