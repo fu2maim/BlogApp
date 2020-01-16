@@ -17,3 +17,4 @@ Route::prefix('admin')->group(function(){
     Route::post('delete', 'AdminBlogController@delete')->name('admin_delete');
     Route::get('list', 'AdminBlogController@list')->name('admin_list');
 });
+Route::get('/', 'FrontBlogController@index')->name('front_index');
