@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminBlogRequest;
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Support\Arr;
 
 class AdminBlogController extends Controller
 {
-    const NUM_PER_PAGE = 5;
+    const NUM_PER_PAGE = 5;  // 1ページあたりの表示件数
 
     /** @var Article */
     protected $article;
+    /** @var Category */
+    protected $category;
 
-    function __construct(Article $article)
+    function __construct(Article $article, Category $category)
     {
-        $this->article = $article;     // インスタンス変数
+        // インスタンス変数
+        $this->article = $article;
+        $this->category = $category;
     }
 
     /**
@@ -85,5 +90,16 @@ class AdminBlogController extends Controller
     {
         $list = $this->article->getArticleList(self::NUM_PER_PAGE);
         return view('admin_blog.list', compact('list'));
+    }
+
+    /**
+     * カテゴリ一覧画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function category()
+    {
+        $list = $this->category->getCategoryList(self::NUM_PER_PAGE);
+        return view('admin_blog.category', compact('list'));
     }
 }
