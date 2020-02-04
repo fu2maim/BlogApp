@@ -12,7 +12,7 @@ class Article extends Model
     use SoftDeletes;
 
     protected $primaryKey = 'article_id';
-    protected $fillable = ['post_date', 'title', 'body'];
+    protected $fillable = ['category_id', 'post_date', 'title', 'body'];
     protected $dates = ['post_date', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
