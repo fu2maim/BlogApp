@@ -25,7 +25,8 @@ class FrontBlogRequest extends FormRequest
     {
         return [
             'year' => 'integer',
-            'monthr' => 'integer',
+            'month' => 'integer',
+            'category_id' => 'integer|min:1',
         ];
     }
 
@@ -34,6 +35,8 @@ class FrontBlogRequest extends FormRequest
         return [
             'year.integer'  => '年は整数にしてください',
             'month.integer' => '月は整数にしてください',
+            'category.integer' => 'カテゴリーIDは整数にしてください',
+            'category.min' => 'カテゴリーIDは1以上にしてください',
         ];
     }
 }

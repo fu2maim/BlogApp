@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <h2><a href="{{ route('front_index') }}">私のブログ</a></h2>
+            <h2><a href="{{ route('front_index') }}">そんな感じの備忘録</a></h2>
 
             {{--何らかのエラー表示用--}}
             @if ($errors->any())

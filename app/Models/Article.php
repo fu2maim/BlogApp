@@ -42,15 +42,21 @@ class Article extends Model
      *
      * @param  int $num_per_page 1ページ当たりの表示件数
      * @param  array $condition    検索条件
-     * @return Illuminate\Pagination\LengthAwarePaginator
+     * @return Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getArticleList(int $num_per_page = 10, array $condition = [])
     {
         // パラメータの取得
+        $category_id = Arr::get($condition, 'category_id');
         $year = Arr::get($condition, 'year');
         $month = Arr::get($condition, 'month');
 
-        $query = $this->orderBy('article_id', 'desc');
+        $query = $this->with('category')->orderBy('article_id', 'desc');
+
+        // カテゴリーIDの指定
+        if($category_id){
+            $query->where('category_id', $category_id);
+        }
 
         // 期間の指定
         if ($year) {
@@ -63,12 +69,10 @@ class Article extends Model
                 $start_date = Carbon::createFromDate($year, 1, 1);
                 $end_date = Carbon::createFromDate($year, 1, 1)->addYear();           // 1年後
             }
-            // Where句を追加
             $query->where('post_date', '>=', $start_date->format('Y-m-d'))
                   ->where('post_date', '<',  $end_date->format('Y-m-d'));
         }
 
-        // paginate メソッドを使うと、ページネーションに必要な全件数やオフセットの指定などは全部やってくれる
         return $query->paginate($num_per_page);
     }
 
@@ -93,5 +97,15 @@ class Article extends Model
             $value->year_month = sprintf("%04d年%02d月", $year, $month);
         }
         return $month_list;
+    }
+
+    /**
+     * Category モデルのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function category()
+    {
+        return $this->hasOne('App\Models\Category', 'category_id', 'category_id');
     }
 }

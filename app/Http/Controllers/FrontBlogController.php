@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use App\Http\Requests\FrontBlogRequest;
 
 class FrontBlogController extends Controller
@@ -13,9 +14,11 @@ class FrontBlogController extends Controller
     // 1ページ当たりの表示件数
     const NUM_PER_PAGE = 5;
 
-    function __construct(Article $article)
+    // コンストラクタ
+    function __construct(Article $article, Category $category)
     {
         $this->article = $article;
+        $this->category = $category;
     }
 
     /**
@@ -26,17 +29,16 @@ class FrontBlogController extends Controller
      */
     function index(FrontBlogRequest $request)
     {
-        // パラメータを取得
         $input = $request->input();
 
-        // ブログ記事一覧を取得
         $list = $this->article->getArticleList(self::NUM_PER_PAGE, $input);
-        // ページネーションリンクにクエリストリングを付け加える
+
         $list->appends($input);
-        // 月別アーカイブの対象月リストを取得
+
+        $category_list = $this->category->getCategoryList();
+
         $month_list = $this->article->getMonthList();
-        return view('front_blog.index', compact('list', 'month_list'));
+
+        return view('front_blog.index', compact('list', 'month_list', 'category_list'));
     }
-
-
 }
