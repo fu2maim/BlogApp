@@ -16,6 +16,10 @@
                 <a href="{{ route('admin_form') }}">
                     <span class="btn btn-primary btn-sm">新規記事作成</span>
                 </a>
+                <br><br>
+                <a href="{{ route('admin_category') }}">
+                    <span class="btn btn-primary btn-sm">カテゴリ一覧</span>
+                </a>
                 <br>
 
                 @if (count($list) > 0)
@@ -47,6 +51,12 @@
                     <br>
                     <p>記事がありません。</p>
                 @endif
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('Logout') }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>

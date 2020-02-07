@@ -53,15 +53,15 @@
     </div>
 
     <!-- モーダル・ダイアログ -->
-    <div class="modal fade" id="categoryModal" tabindex="-1">
+    <div class="modal fade" id="categoryModal" role="dialog" aria-labelledby="categoryModalLabel" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <div class="modal-header">
+                    <h4 class="modal-title" id="categoryModalLabel">カテゴリ編集</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">カテゴリ編集</h4>
                 </div>
 
                 <div class="modal-body">
