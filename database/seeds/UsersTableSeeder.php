@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('categories')->insert([
             'name' => '日記',
+            'display_order' => 1,
         ]);
     }
 }
